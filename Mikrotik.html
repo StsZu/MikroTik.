@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MikroTik Engineering Knowledge Base</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0f172a', // MikroTik Navy (Slate 900)
+                            800: '#1e293b',
+                            blue: '#2563eb',
+                            green: '#10b981', // Console Green
+                            orange: '#f97316', // Warning Orange
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['Fira Code', 'JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-blue selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-brand-900/95 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <svg class="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <span class="text-white font-bold text-xl tracking-tight">MT<span class="text-brand-blue">Knowledge</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#context" class="text-slate-300 hover:text-white text-sm font-medium transition-colors">Основи</a>
+                    <a href="#trends" class="text-slate-300 hover:text-white text-sm font-medium transition-colors">RouterOS v7</a>
+                    <a href="#impact" class="text-slate-300 hover:text-white text-sm font-medium transition-colors">Безпека</a>
+                    <a href="#infrastructure" class="text-slate-300 hover:text-white text-sm font-medium transition-colors">Інфраструктура</a>
+                    <a href="#applications" class="text-slate-300 hover:text-white text-sm font-medium transition-colors">Автоматизація</a>
+                    <a href="#future" class="text-slate-300 hover:text-white text-sm font-medium transition-colors">AI & WinBox</a>
+                    <a href="#quiz" class="text-brand-blue hover:text-blue-400 text-sm font-bold transition-colors">Тест</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-brand-900 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSkiLz48L3N2Zz4=')] [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-blue/20 text-brand-blue text-sm font-semibold mb-6 border border-brand-blue/30">v7.x Ready</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                База знань інженера <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-400">MikroTik</span>
+            </h1>
+            <p class="mt-4 text-xl text-slate-400 max-w-3xl mx-auto mb-10 font-light">
+                Сучасний посібник з архітектури RouterOS, апаратного прискорення, безпеки та автоматизації за допомогою штучного інтелекту.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#context" class="bg-brand-blue hover:bg-blue-600 text-white px-8 py-3.5 rounded-lg font-semibold transition-all shadow-lg shadow-brand-blue/30 hover:-translate-y-0.5">
+                    Розпочати вивчення
+                </a>
+                <a href="#future" class="bg-slate-800 hover:bg-slate-700 text-white px-8 py-3.5 rounded-lg font-semibold transition-all border border-slate-700 hover:border-slate-600">
+                    AI Інструменти
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1. Context: Основи -->
+    <section id="context" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Основи MikroTik: Екосистема та інструменти</h2>
+                <p class="text-lg text-slate-600">Базова архітектура управління роутерами та різниця між візуальними й текстовими інструментами адміністрування.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- WinBox Card -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-blue transition-colors">
+                        <svg class="w-6 h-6 text-brand-blue group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">GUI (WinBox)</h3>
+                    <p class="text-slate-600">Графічний інтерфейс для візуального налаштування. Підтримує підключення за MAC-адресою (Layer 2), що дозволяє керувати пристроєм навіть без IP.</p>
+                </div>
+
+                <!-- CLI Card -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-green transition-colors">
+                        <svg class="w-6 h-6 text-brand-green group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">CLI (Command Line)</h3>
+                    <p class="text-slate-600">Текстовий інтерфейс. Ідеальний для масових конфігурацій, створення бекапів, застосування скриптів та використання AI-генераторів коду.</p>
+                </div>
+
+                <!-- SSH Card -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 hover:shadow-lg transition-all group">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-orange transition-colors">
+                        <svg class="w-6 h-6 text-brand-orange group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Secure Shell (SSH)</h3>
+                    <p class="text-slate-600">Захищений протокол для віддаленого доступу. Незамінний для безпечного управління без використання WinBox у корпоративних мережах.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Toggle Concept -->
+            <div class="mt-12 bg-brand-900 rounded-2xl overflow-hidden shadow-2xl">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900">
+                    <span class="text-sm font-medium text-slate-400">Додавання IP-адреси: Візуалізація підходу</span>
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-800">
+                    <div class="p-8">
+                        <h4 class="text-brand-blue font-semibold mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            WinBox Шлях
+                        </h4>
+                        <ol class="text-slate-300 space-y-3 text-sm">
+                            <li>1. Навігація в меню <span class="text-white font-medium bg-slate-800 px-2 py-1 rounded">IP -> Addresses</span></li>
+                            <li>2. Натиснути кнопку <span class="text-white font-medium bg-slate-800 px-2 py-1 rounded">+ (Add)</span></li>
+                            <li>3. Ввести Address: <span class="text-brand-green">192.168.88.1/24</span></li>
+                            <li>4. Обрати Interface: <span class="text-brand-green">bridge</span></li>
+                            <li>5. Натиснути <span class="text-white font-medium bg-slate-800 px-2 py-1 rounded">Apply</span> та <span class="text-white font-medium bg-slate-800 px-2 py-1 rounded">OK</span></li>
+                        </ol>
+                    </div>
+                    <div class="p-8 bg-slate-900">
+                        <h4 class="text-brand-green font-semibold mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            CLI Команда
+                        </h4>
+                        <div class="bg-black p-4 rounded-lg font-mono text-sm text-slate-300">
+                            <span class="text-brand-green">/ip address</span> add address=<span class="text-yellow-400">192.168.88.1/24</span> interface=<span class="text-blue-400">bridge</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Trends: RouterOS v7 -->
+    <section id="trends" class="py-20 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <span class="text-brand-blue font-semibold tracking-wider uppercase text-sm">Тренди</span>
+                    <h2 class="text-3xl font-bold text-slate-900 mt-2 mb-6">Перехід на RouterOS v7: Нова ера продуктивності</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Міграція з RouterOS v6 на v7 є найважливішим технологічним трендом в екосистемі MikroTik. Оновлена архітектура кардинально змінює підходи до маршрутизації та продуктивності.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong class="block text-slate-900">Оновлене ядро Linux (5.6.3+)</strong>
+                                <span class="text-sm text-slate-600">Забезпечує кращу підтримку сучасного обладнання та нових драйверів.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong class="block text-slate-900">Справжня багатопотоковість</strong>
+                                <span class="text-sm text-slate-600">BGP тепер обробляє кожного піра в окремому потоці процесора.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-brand-green flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong class="block text-slate-900">Сучасні протоколи "з коробки"</strong>
+                                <span class="text-sm text-slate-600">Нативна підтримка WireGuard, VXLAN та ZeroTier.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <!-- Data-heavy visual placeholder -->
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-4">Продуктивність BGP (Час конвергенції)</h4>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-slate-500 font-medium">RouterOS v6 (Single-thread)</span>
+                                    <span class="text-slate-900 font-bold">180 сек</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3">
+                                    <div class="bg-slate-400 h-3 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-brand-blue font-medium">RouterOS v7 (Multi-thread)</span>
+                                    <span class="text-brand-blue font-bold">15 сек</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3">
+                                    <div class="bg-brand-blue h-3 rounded-full" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-blue-50 text-blue-800 rounded-lg text-sm border border-blue-100 flex gap-3">
+                            <svg class="w-5 h-5 flex-shrink-0 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            У v7 повністю змінено синтаксис Routing Filters. Вони тепер пишуться за логікою сценаріїв, наприклад: <code>if (dst in 10.0.0.0/8) { accept }</code>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Impact: Безпека -->
+    <section id="impact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-orange font-semibold tracking-wider uppercase text-sm">Безпека та швидкість</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-2 mb-4">Апаратне прискорення & Hardening</h2>
+                <p class="text-lg text-slate-600">Вплив сучасного заліза на швидкість маршрутизації та жорсткі правила захисту інфраструктури від зламів.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Hardware Card -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-indigo-100 text-indigo-600 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">L3 Hardware Offloading</h3>
+                    </div>
+                    <p class="text-slate-600 mb-6">Використання чипів (наприклад, Marvell Prestera) дозволяє маршрутизувати трафік на швидкості порту (Wire-speed) без навантаження на CPU.</p>
+                    <div class="space-y-3">
+                        <div class="bg-white p-3 rounded shadow-sm border border-slate-100 flex items-center justify-between">
+                            <span class="text-sm font-medium">FastTrack</span>
+                            <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">Bypass CPU</span>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm border border-slate-100 flex items-center justify-between">
+                            <span class="text-sm font-medium">MACsec</span>
+                            <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">L2 Encryption</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hardening Checklist -->
+                <div class="bg-white border-2 border-brand-orange/20 rounded-2xl p-8 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-brand-orange"></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-orange-100 text-brand-orange rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Security Hardening Checklist</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 group cursor-pointer">
+                            <input type="checkbox" checked class="w-5 h-5 text-brand-orange rounded border-gray-300 focus:ring-brand-orange">
+                            <span class="text-slate-700 group-hover:text-slate-900 transition-colors">Відключення Telnet, FTP, WWW</span>
+                        </li>
+                        <li class="flex items-center gap-3 group cursor-pointer">
+                            <input type="checkbox" checked class="w-5 h-5 text-brand-orange rounded border-gray-300 focus:ring-brand-orange">
+                            <span class="text-slate-700 group-hover:text-slate-900 transition-colors">Налаштування Management VLAN</span>
+                        </li>
+                        <li class="flex items-center gap-3 group cursor-pointer">
+                            <input type="checkbox" checked class="w-5 h-5 text-brand-orange rounded border-gray-300 focus:ring-brand-orange">
+                            <span class="text-slate-700 group-hover:text-slate-900 transition-colors">Обмеження доступу через Address-lists</span>
+                        </li>
+                        <li class="flex items-center gap-3 group cursor-pointer">
+                            <input type="checkbox" class="w-5 h-5 text-brand-orange rounded border-gray-300 focus:ring-brand-orange">
+                            <span class="text-slate-700 group-hover:text-slate-900 transition-colors">Перенесення SSH на нестандартний порт</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Infrastructure: Інфраструктура -->
+    <section id="infrastructure" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold mb-4">Сучасна інфраструктура</h2>
+                <p class="text-lg text-slate-400">Маршрутизація та тунелювання для побудови надійних і відмовостійких мереж.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dual WAN -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:-translate-y-1 transition-transform">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">Dual WAN (PCC)</h4>
+                    <p class="text-slate-400 text-sm">Балансування навантаження між двома провайдерами з використанням методу Per Connection Classifier та рекурсивних маршрутів для failover.</p>
+                </div>
+                
+                <!-- WireGuard -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:-translate-y-1 transition-transform">
+                    <div class="text-green-400 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">WireGuard VPN</h4>
+                    <p class="text-slate-400 text-sm">Сучасна альтернатива IPsec/L2TP. Забезпечує надвисоку швидкість шифрування та легкість налаштування (сучасна криптографія).</p>
+                </div>
+
+                <!-- VXLAN -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:-translate-y-1 transition-transform">
+                    <div class="text-purple-400 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">VXLAN</h4>
+                    <p class="text-slate-400 text-sm">Віртуалізація мереж. Зручний інструмент для "прокидання" L2-сегментів поверх існуючої маршрутизованої L3-мережі.</p>
+                </div>
+
+                <!-- MLAG -->
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:-translate-y-1 transition-transform">
+                    <div class="text-cyan-400 mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2">MLAG</h4>
+                    <p class="text-slate-400 text-sm">Multi-chassis Link Aggregation Group. Створення агрегованих лінків на рівні ядра мережі для безвідмовної комутації.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Applications: Автоматизація -->
+    <section id="applications" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Практичне адміністрування: Скрипти та автоматизація</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Ефективний інженер витрачає мінімум часу на рутину. Вбудована мова сценаріїв RouterOS та зовнішня автоматизація через Python (Netmiko, RouterOS API) дозволяють керувати сотнями пристроїв одночасно.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-brand-blue"></div>
+                            <span class="text-slate-700"><strong>Резервне копіювання:</strong> автоматичне вивантаження на FTP/Email.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-brand-blue"></div>
+                            <span class="text-slate-700"><strong>Netwatch:</strong> моніторинг інтерфейсів та реагування на падіння лінків.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-brand-blue"></div>
+                            <span class="text-slate-700"><strong>Масовий деплой:</strong> виконання однотипних команд на базі пристроїв.</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="lg:w-1/2 w-full">
+                    <!-- Terminal Mockup -->
+                    <div class="rounded-xl overflow-hidden bg-[#1e1e1e] shadow-2xl border border-slate-700">
+                        <div class="flex items-center px-4 py-3 bg-[#2d2d2d] border-b border-black">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                            </div>
+                            <span class="ml-4 text-xs text-slate-400 font-mono">auto_backup.rsc</span>
+                        </div>
+                        <div class="p-6 font-mono text-sm overflow-x-auto text-slate-300">
+<pre><code><span class="text-slate-500"># Створення бекапу та відправка на Email</span>
+<span class="text-pink-400">/system</span> backup save name=<span class="text-green-300">"daily_config"</span>;
+<span class="text-slate-500"># Затримка для завершення файлу</span>
+<span class="text-blue-300">delay</span> 5s; 
+<span class="text-pink-400">/tool</span> e-mail send \
+  to=<span class="text-green-300">"noc@company.com"</span> \
+  subject=<span class="text-green-300">"([/system identity get name]) Backup"</span> \
+  file=<span class="text-green-300">"daily_config.backup"</span>;
+<span class="text-slate-500"># Логування</span>
+<span class="text-pink-400">/log</span> info <span class="text-green-300">"Backup successfully sent."</span>;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Future: AI & Інженер -->
+    <section id="future" class="py-20 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-indigo-600 font-semibold tracking-wider uppercase text-sm">Майбутнє</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-2 mb-4">Симбіоз інженера та AI</h2>
+                <p class="text-lg text-slate-600">Нова парадигма: AI генерує складний код для CLI, а інженер контролює виконання та перевіряє логіку у WinBox.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <!-- AI Chat Mockup -->
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 flex flex-col gap-4">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Промпт до LLM (AI)
+                    </h3>
+                    <div class="bg-slate-100 rounded-xl p-4 text-sm text-slate-700 rounded-br-none self-end max-w-[85%]">
+                        Згенеруй код для RouterOS v7: налаштуй WireGuard сервер на порту 13231, IP 10.10.10.1/24, та додай базове правило Firewall для дозволу підключень.
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-sm rounded-bl-none self-start max-w-[95%]">
+                        <p class="text-indigo-900 mb-2 font-medium">Ось ваш код для RouterOS v7:</p>
+                        <div class="bg-slate-900 text-slate-300 p-3 rounded font-mono text-xs overflow-x-auto">
+<pre><code>/interface wireguard
+add listen-port=13231 name=wg-server
+/ip address
+add address=10.10.10.1/24 interface=wg-server
+/ip firewall filter
+add action=accept chain=input dst-port=13231 protocol=udp place-before=1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WinBox Validation Mockup -->
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2 mb-4">
+                        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Валідація у WinBox
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-6">
+                        Після вставки коду в Terminal, інженер відкриває меню <strong>IP -> Firewall -> Filter Rules</strong> для візуального аудиту:
+                    </p>
+                    <div class="border border-slate-300 rounded shadow-sm overflow-hidden text-xs">
+                        <div class="bg-slate-100 px-3 py-2 border-b border-slate-300 font-semibold flex justify-between">
+                            <span>Firewall List</span>
+                            <div class="flex gap-1">
+                                <span class="bg-white px-2 rounded border border-slate-300">+</span>
+                                <span class="bg-white px-2 rounded border border-slate-300">-</span>
+                            </div>
+                        </div>
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-slate-500 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-3 py-2">#</th>
+                                    <th class="px-3 py-2">Action</th>
+                                    <th class="px-3 py-2">Chain</th>
+                                    <th class="px-3 py-2">Protocol</th>
+                                    <th class="px-3 py-2">Dst. Port</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 bg-white">
+                                <tr class="bg-green-50/50">
+                                    <td class="px-3 py-2">0</td>
+                                    <td class="px-3 py-2 font-medium text-slate-800">accept</td>
+                                    <td class="px-3 py-2 text-slate-600">input</td>
+                                    <td class="px-3 py-2 text-slate-600">17 (udp)</td>
+                                    <td class="px-3 py-2 font-mono text-slate-800">13231</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-3 py-2">1</td>
+                                    <td class="px-3 py-2 font-medium text-slate-800">accept</td>
+                                    <td class="px-3 py-2 text-slate-600">input</td>
+                                    <td class="px-3 py-2 text-slate-600">-</td>
+                                    <td class="px-3 py-2 text-slate-600">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Quiz: Перевірка знань -->
+    <section id="quiz" class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-brand-blue font-semibold tracking-wider uppercase text-sm">Перевірка знань</span>
+                <h2 class="text-3xl font-bold text-white mt-2 mb-4">MikroTik Інженер: Базовий Тест</h2>
+                <p class="text-lg text-slate-400">Пройдіть цей інтерактивний тест із 10 питань, щоб закріпити матеріал з бази знань.</p>
+            </div>
+
+            <div id="quiz-container" class="bg-slate-800 rounded-2xl p-8 border border-slate-700 shadow-2xl relative min-h-[400px] flex flex-col justify-center">
+                <div id="quiz-intro" class="text-center">
+                    <button onclick="startQuiz()" class="bg-brand-blue hover:bg-blue-600 text-white px-8 py-3.5 rounded-lg font-semibold transition-all shadow-lg shadow-brand-blue/30 hover:-translate-y-0.5">
+                        Почати тестування
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Final CTA -->
+    <footer class="bg-brand-900 py-12 border-t border-slate-800 text-center">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-2xl font-bold text-white mb-4">Готові підвищити свої навички?</h2>
+            <p class="text-slate-400 mb-8">Комбінуйте глибокі знання мережевої архітектури з потужністю автоматизації та інструментів ШІ.</p>
+            <a href="#" class="inline-block bg-brand-blue hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all">
+                Повернутись нагору
+            </a>
+            <div class="mt-12 text-slate-600 text-sm">
+                &copy; 2026 MikroTik Engineering Knowledge Base. Створено для вивчення та розвитку.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const quizData = [
+            {
+                question: "Який інструмент дозволяє підключатися до роутера MikroTik на рівні L2 (за MAC-адресою) навіть без налаштованого IP?",
+                options: ["CLI", "WinBox", "SSH", "WebFig"],
+                correct: 1,
+                explanation: "WinBox використовує власний протокол (MAC-Telnet/MAC-Winbox), що працює на рівні Layer 2. Це дозволяє налаштовувати пристрій ще до присвоєння IP-адреси, тоді як SSH чи WebFig вимагають працюючого Layer 3 (IP)."
+            },
+            {
+                question: "Яка головна архітектурна перевага протоколу BGP у RouterOS v7 порівняно з v6?",
+                options: ["Він використовує менше оперативної пам'яті", "Повна однопотоковість для стабільності", "Справжня багатопотоковість (кожен пір в окремому потоці)", "Вбудований захист від DDoS"],
+                correct: 2,
+                explanation: "У RouterOS v7 ядро BGP було переписане з нуля. Тепер процес обробки пірів є багатопотоковим (multi-threaded), що кардинально зменшує час збіжності (конвергенції) маршрутів на багатоядерних процесорах."
+            },
+            {
+                question: "Яке ядро Linux є базовим для RouterOS v7?",
+                options: ["3.3.5", "4.14", "5.6.3+", "6.1"],
+                correct: 2,
+                explanation: "RouterOS v7 базується на ядрі Linux 5.6.3 (та новіших версіях), що принесло вбудовану підтримку сучасних протоколів (наприклад, WireGuard) та кращу сумісність з новим апаратним забезпеченням."
+            },
+            {
+                question: "Яка технологія дозволяє маршрутизувати трафік на швидкості порту без навантаження на процесор (на підтримуваних чипах, як Marvell Prestera)?",
+                options: ["FastTrack", "L3 Hardware Offloading", "MACsec", "MLAG"],
+                correct: 1,
+                explanation: "L3 Hardware Offloading дозволяє перенести задачі маршрутизації (L3) безпосередньо на ASIC-чип комутатора, гарантуючи швидкість порту (Wire-speed) і практично нульове навантаження на CPU."
+            },
+            {
+                question: "Що з наведеного є правильною практикою згідно з Hardening Checklist для MikroTik?",
+                options: ["Залишити Telnet увімкненим для екстреного доступу", "Відключити Telnet, FTP та WWW", "Використовувати стандартний порт SSH (22) для всіх", "Дозволити доступ до WinBox з будь-якої IP-адреси"],
+                correct: 1,
+                explanation: "Згідно з базовими правилами безпеки, усі застарілі сервіси, що передають дані у відкритому вигляді (Telnet, FTP, HTTP/WWW), мають бути повністю відключені для закриття векторів атак."
+            },
+            {
+                question: "Який сучасний та швидкий VPN-протокол підтримується \"з коробки\" у RouterOS v7?",
+                options: ["PPTP", "OpenVPN (лише TCP)", "WireGuard", "IPsec IKEv1"],
+                correct: 2,
+                explanation: "WireGuard був доданий нативно в RouterOS v7. Він працює глибоко в ядрі, забезпечує надзвичайно високу швидкість та використовує найсучасніші й надійні криптографічні алгоритми."
+            },
+            {
+                question: "Для чого використовується метод PCC (Per Connection Classifier)?",
+                options: ["Балансування навантаження між двома або більше провайдерами (Dual WAN)", "Апаратне шифрування трафіку на рівні L2", "Прокидання L2-сегментів через маршрутизовану мережу", "Об'єднання фізичних портів у логічний канал"],
+                correct: 0,
+                explanation: "Метод PCC (Per Connection Classifier) дозволяє розбивати вихідний трафік на потоки та рівномірно розподіляти його між кількома WAN-з'єднаннями (провайдерами) для ефективного балансування."
+            },
+            {
+                question: "Яка технологія дозволяє створити безвідмовну комутацію на рівні дата-центру шляхом агрегації лінків між різними шасі?",
+                options: ["VXLAN", "VRRP", "MLAG", "Spanning Tree Protocol"],
+                correct: 2,
+                explanation: "MLAG (Multi-chassis Link Aggregation Group) використовується для об'єднання портів на різних фізичних комутаторах в один логічний канал, що забезпечує апаратну відмовостійкість рівня ядра мережі."
+            },
+            {
+                question: "Який вбудований інструмент RouterOS найчастіше використовується у скриптах для моніторингу доступності вузлів та реагування на падіння лінків?",
+                options: ["Torch", "Packet Sniffer", "Netwatch", "Bandwidth Test"],
+                correct: 2,
+                explanation: "Netwatch — це вбудована утиліта, яка періодично відправляє ICMP-запити (пінги) до вказаних хостів і може автоматично запускати скрипти у разі їх падіння (Down) або відновлення (Up)."
+            },
+            {
+                question: "Який рекомендований підхід до використання AI при налаштуванні MikroTik?",
+                options: ["Надання AI прямого доступу до SSH роутера", "AI генерує CLI-код, а інженер перевіряє його логіку візуально у WinBox", "Використання AI виключно для розшифрування логів", "Повна заміна WinBox на AI-чатботи"],
+                correct: 1,
+                explanation: "AI (LLM) чудово генерує складні CLI-команди, проте з міркувань безпеки інженер має самостійно вставляти код і обов'язково візуально валідувати згенеровану логіку через GUI (WinBox)."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = quizData[currentQuestion];
+            let optionsHtml = '';
+            
+            q.options.forEach((opt, index) => {
+                optionsHtml += `
+                    <button onclick="checkAnswer(${index}, this)" class="w-full text-left p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-slate-600 text-slate-200 transition-all mb-3 group">
+                        <span class="inline-block w-8 h-8 text-center leading-8 rounded-lg bg-slate-800 text-brand-blue font-bold mr-3 group-hover:bg-brand-blue group-hover:text-white transition-colors">${String.fromCharCode(65 + index)}</span>
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            quizContainer.innerHTML = `
+                <div class="mb-8 flex justify-between items-center text-sm font-medium text-slate-400">
+                    <span>Питання ${currentQuestion + 1} з ${quizData.length}</span>
+                    <span class="px-3 py-1 bg-slate-800 rounded-full text-brand-blue">Оцінка: ${score}</span>
+                </div>
+                <h3 class="text-xl md:text-2xl font-bold text-white mb-6 leading-relaxed">${q.question}</h3>
+                <div class="space-y-2 pointer-events-auto" id="options-container">
+                    ${optionsHtml}
+                </div>
+                <div id="feedback-container" class="mt-6 hidden"></div>
+                <div id="next-btn-container" class="mt-8 hidden flex justify-end">
+                    <button onclick="nextQuestion()" class="bg-brand-blue hover:bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all">
+                        Наступне питання &rarr;
+                    </button>
+                </div>
+            `;
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const q = quizData[currentQuestion];
+            const correctIndex = q.correct;
+            const container = document.getElementById('options-container');
+            const buttons = container.getElementsByTagName('button');
+            const feedbackContainer = document.getElementById('feedback-container');
+            
+            for(let btn of buttons) {
+                btn.onclick = null;
+                btn.classList.remove('hover:bg-slate-600');
+                btn.classList.add('opacity-75', 'cursor-default');
+            }
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                btnElement.classList.replace('border-slate-600', 'border-brand-green');
+                btnElement.classList.replace('bg-slate-700/50', 'bg-green-900/40');
+                btnElement.classList.add('ring-2', 'ring-brand-green/50');
+                
+                feedbackContainer.className = 'mt-6 rounded-xl p-5 border bg-green-900/30 border-brand-green/50 text-left';
+                feedbackContainer.innerHTML = `
+                    <div class="flex items-center gap-2 mb-3">
+                        <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <strong class="text-brand-green text-lg">Правильно!</strong>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">${q.explanation}</p>
+                `;
+            } else {
+                btnElement.classList.replace('border-slate-600', 'border-red-500');
+                btnElement.classList.replace('bg-slate-700/50', 'bg-red-900/40');
+                
+                buttons[correctIndex].classList.replace('border-slate-600', 'border-brand-green');
+                buttons[correctIndex].classList.replace('bg-slate-700/50', 'bg-green-900/40');
+                
+                feedbackContainer.className = 'mt-6 rounded-xl p-5 border bg-red-900/30 border-red-500/50 text-left';
+                feedbackContainer.innerHTML = `
+                    <div class="flex items-center gap-2 mb-3">
+                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <strong class="text-red-500 text-lg">Неправильно. Правильна відповідь: ${String.fromCharCode(65 + correctIndex)}</strong>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">${q.explanation}</p>
+                `;
+            }
+
+            feedbackContainer.classList.remove('hidden');
+            document.getElementById('next-btn-container').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            let message = "";
+            let color = "";
+            let emoji = "";
+
+            if (score >= 9) {
+                message = "Відмінно! Ви справжній експерт з MikroTik.";
+                color = "text-brand-green";
+                emoji = "🏆";
+            } else if (score >= 6) {
+                message = "Гарний результат! Але є куди рости.";
+                color = "text-yellow-400";
+                emoji = "👍";
+            } else {
+                message = "Варто ще раз переглянути матеріали бази знань.";
+                color = "text-brand-orange";
+                emoji = "📚";
+            }
+
+            quizContainer.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-6xl mb-4">${emoji}</div>
+                    <h3 class="text-3xl font-bold text-white mb-2">Тест завершено!</h3>
+                    <p class="text-xl text-slate-400 mb-6">Ваш результат: <span class="${color} font-bold text-3xl mx-2">${score} / ${quizData.length}</span></p>
+                    <p class="text-lg text-slate-300 mb-8">${message}</p>
+                    <button onclick="startQuiz()" class="bg-slate-700 hover:bg-slate-600 text-white px-8 py-3 rounded-lg font-semibold transition-all border border-slate-600">
+                        <svg class="w-5 h-5 inline-block mr-2 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Спробувати ще раз
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
